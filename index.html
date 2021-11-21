@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>convertidor de base numerica</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+    }
+
+    #Forms {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .column {
+        display: flex;
+        justify-content: space-around;
+        width: 43%;
+        min-height: 100vh;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    div {
+        width: 100%;
+    }
+
+    textarea {
+        width: 100%;
+        min-height: 40vh;
+        background: white;
+        border: black 1px solid;
+        padding: 1vw;
+        resize: none;
+    }
+</style>
+<script>
+    let variables = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
+    let baseE, baseS;
+    vEntrada = "";
+    vSalida = "";
+    alert("El programa puede presentar imprecisiones, debido a las limitaciones computacionales y la tendencia a la perdida de informacion al trabajar con numeros que en sistema decimal presentan una longitud de alrededor de 20 digitos");
+    entrada = (value) => {
+        baseE = value;
+        validar(document.getElementById("entrada"),"");
+    }
+    salida = (value) => {
+        baseS = value;
+        validar(document.getElementById("entrada"),document.getElementById("entrada").value);
+    }
+    validar = (obj, value) => {
+        if (value.length > 0) {
+            if (!(baseE && baseS)) {
+                obj.value = vEntrada;
+                alert("Seleccione ambas bases")
+            } else {
+                if (-1 < variables.findIndex(element => element == value[value.length - 1]) && (variables.findIndex(element => element == value[value.length - 1]) + 1) <= baseE) {
+                    vEntrada = value;
+                    // convertimos a decimal
+                    let acumulado = parseInt(value,baseE);
+                    console.log(acumulado);
+                    // convertimos a base de salida 
+                    vSalida = "";
+                    let cantidad = 0;
+                    for (cantidad; acumulado >= Math.pow(baseS, cantidad + 1); cantidad++) {
+
+                    }
+                    for (cantidad; cantidad >= 0; cantidad--) {
+                        let i;
+                        if (acumulado< Math.pow(baseS, cantidad)) {
+                            i = 0;
+                        } else {
+                            for (i = 0; acumulado>= Math.pow(baseS, cantidad); i++) {
+                                acumulado-=Math.pow(baseS, cantidad);
+                            }
+                        }
+                        vSalida += ("" + variables[i])
+                    }
+                } else {
+                    obj.value = vEntrada;
+                    alert("digito invalido para la base seleccionada")
+                }
+            }
+        } else {
+            vEntrada = "";
+            vSalida = "";
+        }        
+        obj.value = vEntrada;
+        document.getElementById("salida").value = vSalida;
+    };
+</script>
+
+<body>
+    <div id="Forms">
+        <div class="column">
+            <h1>Entrada</h1>
+            <p>
+                Escoja la base del sistema numerico
+                <select onchange="entrada(value)">
+                    <option style='display: none;'>Seleccione
+                        la base</option>
+                    <option value=2>2</option>
+                    <option value=3>3</option>
+                    <option value=4>4</option>
+                    <option value=5>5</option>
+                    <option value=6>6</option>
+                    <option value=7>7</option>
+                    <option value=8>8</option>
+                    <option value=9>9</option>
+                    <option value=10>10</option>
+                    <option value=11>11</option>
+                    <option value=12>12</option>
+                    <option value=13>13</option>
+                    <option value=14>14</option>
+                    <option value=15>15</option>
+                    <option value=16>16</option>
+                </select>
+            </p>
+            <textarea id="entrada" oninput="validar(this,value)"></textarea>
+        </div>
+        <div class="column">
+            <h1>Resultado</h1>
+            <p>
+                Escoja la base del sistema numerico
+                <select onchange="salida(value)">
+                    <option style='display: none;'>Seleccione
+                        la base</option>
+                    <option value=2>2</option>
+                    <option value=3>3</option>
+                    <option value=4>4</option>
+                    <option value=5>5</option>
+                    <option value=6>6</option>
+                    <option value=7>7</option>
+                    <option value=8>8</option>
+                    <option value=9>9</option>
+                    <option value=10>10</option>
+                    <option value=11>11</option>
+                    <option value=12>12</option>
+                    <option value=13>13</option>
+                    <option value=14>14</option>
+                    <option value=15>15</option>
+                    <option value=16>16</option>
+                </select>
+            </p>
+            <div>
+                <textarea id="salida" disabled></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
